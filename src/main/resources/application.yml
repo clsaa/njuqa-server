@@ -1,0 +1,26 @@
+server:
+  port: 8989
+spring:
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  application:
+    name: njuqa-server
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://sh-cdb-42xoavqj.sql.tencentcdb.com:63280/db_njuqa?characterEncoding=utf8
+    username: njuqa_dba
+    password: njuqa_123456
+    driver-class-name: com.mysql.jdbc.Driver
+    max-active: 10
+    max-idle: 5
+    min-idle: 5
+    initial-size: 5
+    max-wait: 10000
+  jpa:
+    hibernate:
+      ddl-auto: update
+spring.jackson.serialization.WRITE_DATES_AS_TIMESTAMPS: true  #返回JSON统一日期为时间戳
+spring.jackson.serialization.WRITE_DATE_TIMESTAMPS_AS_NANOSECONDS: false
