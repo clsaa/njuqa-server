@@ -58,14 +58,4 @@ public class DruidDataSourceConfig {
     return datasource;
   }
 
-  /**
-   * 配置事务
-   *
-   * @return DataSourceTransactionManager
-   */
-  @Bean(name = "datasource.common.transaction.manager")
-  public DataSourceTransactionManager createDataSourceTransactionManager() {
-    DataSource dataSource = this.createDataSource();
-    return new DataSourceTransactionManager(dataSource);
-  }
 }

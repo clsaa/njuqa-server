@@ -1,12 +1,15 @@
 package com.clsaa.wechat.njuqa.server.dao;
 
 import com.clsaa.wechat.njuqa.server.model.po.User;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import java.util.List;
 
 /**
  * @author joyren
  */
-public interface UserDao extends CrudRepository<User, String> {
+public interface UserDao extends JpaRepository<User, String> {
 
     /**
      * 根据id查询用户
