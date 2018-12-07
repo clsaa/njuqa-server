@@ -17,6 +17,26 @@ public class UserController {
 
     /**
      * <p>
+     *
+     * </p>
+     *
+     * @param userDtoV1 {@link UserDtoV1} user传输层对象（JSON）
+     * @return {@link }
+     * @summary
+     * @author 任贵杰 812022339@qq.com
+     * @since 2018-12-07
+     */
+    @PostMapping(value = "/v1/user")
+    public UserV1 addUserV1(@RequestBody UserDtoV1 userDtoV1) {
+        return this.userService.addUser(userDtoV1.getId(),
+                userDtoV1.getUsername(),
+                userDtoV1.getNickname(),
+                userDtoV1.getAvatarUrl(),
+                userDtoV1.getType());
+    }
+
+    /**
+     * <p>
      * 根据用户id查询单个用户
      * </p>
      *
@@ -36,7 +56,7 @@ public class UserController {
      * 修改用户信息
      * </p>
      *
-     * @param userDtoV1 user传输层对象（JSON）
+     * @param userDtoV1 {@link UserDtoV1} user传输层对象（JSON）
      * @return {@link UserV1}
      * @summary 修改用户信息
      * @author 任贵杰 812022339@qq.com
