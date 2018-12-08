@@ -12,7 +12,8 @@ import java.sql.Timestamp;
 @Getter
 @Setter
 @Entity
-@Table(name = "t_user_attention", schema = "db_njuqa")
+@Table(name = "t_user_attention", schema = "db_njuqa",
+        indexes = {@Index(columnList = "source_user,target_user", unique = true)})
 public class UserAttention {
 
     @Id

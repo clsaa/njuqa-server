@@ -3,10 +3,7 @@ package com.clsaa.wechat.njuqa.server.model.po;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
@@ -15,8 +12,13 @@ import java.sql.Timestamp;
 @Getter
 @Setter
 @Entity
-@Table(name = "t_question_attention", schema = "db_njuqa")
+@Table(name = "t_question_attention", schema = "db_njuqa",
+        indexes = {@Index(columnList = "user_id,question_id",unique = true)})
 public class QuestionAttention {
+
+    @Id
+    @Column(name = "id")
+    private String id;
 
     @Basic
     @Column(name = "user_id")
@@ -29,7 +31,7 @@ public class QuestionAttention {
     @Basic
     @Column(name = "ctime")
     private Timestamp ctime;
-    
+
     @Basic
     @Column(name = "mtime")
     private Timestamp mtime;
