@@ -6,38 +6,35 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.sql.Timestamp;
 
-
 /**
  * @author joyren
  */
 @Getter
 @Setter
 @Entity
-@Table(name = "t_user", schema = "db_njuqa")
-public class User {
+@Table(name = "t_comment", schema = "db_njuqa")
+public class Comment {
     @Id
     @Column(name = "id")
     private String id;
+
     @Basic
-    @Column(name = "openid")
-    private String openId;
+    @Column(name = "user_id")
+    private String userId;
+
     @Basic
-    @Column(name = "username")
-    private String username;
+    @Column(name = "answer_id")
+    private String answerId;
+
     @Basic
-    @Column(name = "nickname")
-    private String nickname;
-    @Basic
-    @Column(name = "avatarUrl")
-    private String avatarUrl;
+    @Column(name = "content")
+    private String content;
+
     @Basic
     @Column(name = "ctime")
     private Timestamp ctime;
+
     @Basic
     @Column(name = "mtime")
     private Timestamp mtime;
-    @Basic
-    @Column(name = "identity")
-    private String identity;
-
 }

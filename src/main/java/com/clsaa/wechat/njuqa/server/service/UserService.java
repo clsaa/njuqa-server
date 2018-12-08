@@ -35,10 +35,8 @@ public class UserService {
         user.setUsername(username);
         user.setNickname(nickname);
         user.setAvatarUrl(avatarUrl);
-        user.setType("ADMIN");
         user.setCtime(TimestampUtil.now());
         user.setMtime(TimestampUtil.now());
-        user.setStatus("DELETED");
         User u = this.userDao.saveAndFlush(user);
         return BeanUtils.convertType(u, UserV1.class);
     }
@@ -56,7 +54,6 @@ public class UserService {
         existUser.setUsername(username);
         existUser.setNickname(nickname);
         existUser.setAvatarUrl(avatarUrl);
-        existUser.setType(type);
         existUser.setMtime(TimestampUtil.now());
         existUser = this.userDao.save(existUser);
         return BeanUtils.convertType(existUser, UserV1.class);
