@@ -12,7 +12,8 @@ import java.sql.Timestamp;
 @Getter
 @Setter
 @Entity
-@Table(name = "t_answer", schema = "db_njuqa")
+@Table(name = "t_answer", schema = "db_njuqa",
+        indexes = {@Index(columnList = "user_id,question_id", unique = true)})
 public class Answer {
 
     public static final String TYPE_ANONYMOUS = "ANONYMOUS";

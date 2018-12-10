@@ -34,4 +34,8 @@ public interface BizCodes {
      * 用户只能修改自己的回答
      */
     BizCode CANNOT_UPDATE_ANSWER = new BizCode(1051, "用户只能修改自己的回答");
+    /**
+     * 重复的用户关注
+     */
+    BizCode REPEATED_USER_ATTENTION = new BizCode(1052, "已关注此用户");
 }
