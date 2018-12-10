@@ -14,6 +14,10 @@ import java.sql.Timestamp;
 @Entity
 @Table(name = "t_answer", schema = "db_njuqa")
 public class Answer {
+
+    public static final String TYPE_ANONYMOUS = "ANONYMOUS";
+    public static final String TYPE_SHOW = "SHOW";
+
     @Id
     @Column(name = "id")
     private String id;

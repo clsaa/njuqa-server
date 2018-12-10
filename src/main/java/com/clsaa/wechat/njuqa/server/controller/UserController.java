@@ -48,7 +48,7 @@ public class UserController {
      * @since 2018-12-07
      */
     @DeleteMapping(value = "/v1/user/{id}")
-    public boolean deleteUserV1(@PathVariable("id") String id) {
+    public boolean deleteUserByIdV1(@PathVariable("id") String id) {
         return this.userService.deleteUserById(id);
     }
 

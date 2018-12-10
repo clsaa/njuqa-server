@@ -9,7 +9,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UserDtoV1 {
-    private String id;
     private String openId;
     private String nickname;
     private String avatarUrl;

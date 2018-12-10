@@ -26,4 +26,12 @@ public interface BizCodes {
      * 数据库更新失败
      */
     BizCode ERROR_UPDATE = new BizCode(1012, "更新失败");
+    /**
+     * 用户已回答过此问题
+     */
+    BizCode REPEATED_ANSWER = new BizCode(1050, "用户已回答过此问题,无法回答");
+    /**
+     * 用户只能修改自己的回答
+     */
+    BizCode CANNOT_UPDATE_ANSWER = new BizCode(1051, "用户只能修改自己的回答");
 }
