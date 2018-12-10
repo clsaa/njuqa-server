@@ -4,6 +4,8 @@ import com.clsaa.rest.result.Pagination;
 import com.clsaa.wechat.njuqa.server.model.dto.UserDtoV1;
 import com.clsaa.wechat.njuqa.server.model.vo.UserV1;
 import com.clsaa.wechat.njuqa.server.service.UserService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,11 +31,9 @@ public class UserController {
      */
     @PostMapping(value = "/v1/user")
     public UserV1 addUserV1(@RequestBody UserDtoV1 userDtoV1) {
-        return this.userService.addUser(userDtoV1.getId(),
-                userDtoV1.getUsername(),
+        return this.userService.addUser(userDtoV1.getOpenId(),
                 userDtoV1.getNickname(),
-                userDtoV1.getAvatarUrl(),
-                userDtoV1.getType());
+                userDtoV1.getAvatarUrl());
     }
 
     /**
@@ -58,6 +58,7 @@ public class UserController {
      * 修改用户信息
      * </p>
      *
+     * @param id        用户id
      * @param userDtoV1 {@link UserDtoV1} user传输层对象（JSON）
      * @return {@link UserV1}
      * @summary 修改用户信息
@@ -65,12 +66,11 @@ public class UserController {
      * @since 2018-12-07
      */
     @PutMapping(value = "/v1/user/{id}")
-    public UserV1 updateUserByIdV1(@RequestBody UserDtoV1 userDtoV1) {
-        return this.userService.updateUser(userDtoV1.getId(),
-                userDtoV1.getUsername(),
+    public UserV1 updateUserByIdV1(@PathVariable("id") String id,
+                                   @RequestBody UserDtoV1 userDtoV1) {
+        return this.userService.updateUser(id,
                 userDtoV1.getNickname(),
-                userDtoV1.getAvatarUrl(),
-                userDtoV1.getType());
+                userDtoV1.getAvatarUrl());
     }
 
     /**
@@ -91,7 +91,7 @@ public class UserController {
 
     /**
      * <p>
-     *  分页查询用户信息
+     * 分页查询用户信息
      * </p>
      *
      * @param pageNo   页号，默认为1
@@ -106,4 +106,22 @@ public class UserController {
                                                   @RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pageSize) {
         return this.userService.getUserV1Pagination(pageNo, pageSize);
     }
+
+    /**
+     * <p>
+     * 根据code查询用户信息
+     * </p>
+     *
+     * @param code 微信小程序登录获取的code
+     * @return {@link UserV1}
+     * @summary 根据code查询用户信息
+     * @author 任贵杰 812022339@qq.com
+     * @since 2018-12-10
+     */
+    @ApiOperation(value = "根据code查询用户信息", notes = "若用户已注册则返回用户全部信息，否则只返回用户openid")
+    @GetMapping(value = "/v1/user/byCode")
+    public UserV1 findUserByCodeV1(@ApiParam(value = "微信小程序登录获取的code") @RequestParam("code") String code) {
+        return this.userService.findUserV1ByCode(code);
+    }
+
 }

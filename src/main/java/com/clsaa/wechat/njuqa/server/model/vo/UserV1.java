@@ -3,7 +3,6 @@ package com.clsaa.wechat.njuqa.server.model.vo;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
 import java.sql.Timestamp;
 
 
@@ -14,11 +13,10 @@ import java.sql.Timestamp;
 @Setter
 public class UserV1 {
     private String id;
-    private String username;
+    private String openId;
     private String nickname;
     private String avatarUrl;
     private Timestamp ctime;
     private Timestamp mtime;
-    private String type;
-    private String status;
+    private String identity;
 }

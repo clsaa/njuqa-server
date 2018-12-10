@@ -10,8 +10,7 @@ import lombok.Setter;
 @Setter
 public class UserDtoV1 {
     private String id;
-    private String username;
+    private String openId;
     private String nickname;
     private String avatarUrl;
-    private String type;
 }

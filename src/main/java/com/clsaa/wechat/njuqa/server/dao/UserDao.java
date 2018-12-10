@@ -16,4 +16,12 @@ public interface UserDao extends JpaRepository<User, String> {
      */
     User findUsersById(String id);
 
+    /**
+     * 根据openid查询用户
+     *
+     * @param openId 第三方平台openid
+     * @return {@link User}
+     */
+    User findByOpenId(String openId);
+
 }

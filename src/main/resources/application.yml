@@ -43,3 +43,8 @@ spring:
     show-sql: true
 spring.jackson.serialization.WRITE_DATES_AS_TIMESTAMPS: true  #返回JSON统一日期为时间戳
 spring.jackson.serialization.WRITE_DATE_TIMESTAMPS_AS_NANOSECONDS: false
+
+njuqa:
+  wechat:
+    appid: wx3a389d4403d72f0f
+    secret: 275c59ebcee8d44884457b16b9650436

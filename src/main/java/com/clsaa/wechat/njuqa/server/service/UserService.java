@@ -2,8 +2,11 @@ package com.clsaa.wechat.njuqa.server.service;
 
 import com.clsaa.rest.result.Pagination;
 import com.clsaa.rest.result.bizassert.BizAssert;
+import com.clsaa.rest.result.bizassert.BizCode;
 import com.clsaa.wechat.njuqa.server.config.BizCodes;
+import com.clsaa.wechat.njuqa.server.config.NjuqaProperties;
 import com.clsaa.wechat.njuqa.server.dao.UserDao;
+import com.clsaa.wechat.njuqa.server.model.dto.WechatLoginUserDtoV1;
 import com.clsaa.wechat.njuqa.server.model.po.User;
 import com.clsaa.wechat.njuqa.server.model.vo.UserV1;
 import com.clsaa.wechat.njuqa.server.util.BeanUtils;
@@ -14,6 +17,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
@@ -29,10 +34,20 @@ public class UserService {
     @Autowired
     private UserDao userDao;
 
-    public UserV1 addUser(String id, String username, String nickname, String avatarUrl, String type) {
+    @Autowired
+    private WechatService wechatService;
+
+    @Autowired
+    private NjuqaProperties njuqaProperties;
+
+    @Transactional(rollbackFor = Exception.class, isolation = Isolation.SERIALIZABLE)
+    public UserV1 addUser(String openid, String nickname, String avatarUrl) {
+        User existUser = this.userDao.findByOpenId(openid);
+        BizAssert.allowed(existUser == null,
+                new BizCode(BizCodes.INVALID_PARAM.getCode(), "用户已注册"));
         User user = new User();
         user.setId(UUIDUtil.getUUID());
-        user.setUsername(username);
+        user.setOpenId(openid);
         user.setNickname(nickname);
         user.setAvatarUrl(avatarUrl);
         user.setCtime(TimestampUtil.now());
@@ -48,10 +63,9 @@ public class UserService {
         return true;
     }
 
-    public UserV1 updateUser(String id, String username, String nickname, String avatarUrl, String type) {
+    public UserV1 updateUser(String id, String nickname, String avatarUrl) {
         User existUser = this.userDao.findUsersById(id);
         BizAssert.found(existUser != null, BizCodes.NOT_FOUND);
-        existUser.setUsername(username);
         existUser.setNickname(nickname);
         existUser.setAvatarUrl(avatarUrl);
         existUser.setMtime(TimestampUtil.now());
@@ -78,9 +92,28 @@ public class UserService {
             return pagination;
         }
         Sort sort = new Sort(Sort.Direction.DESC, "ctime");
-        Pageable pageRequest = PageRequest.of(pagination.getPageNo()-1, pagination.getPageSize(), sort);
+        Pageable pageRequest = PageRequest.of(pagination.getPageNo() - 1, pagination.getPageSize(), sort);
         List<User> userList = this.userDao.findAll(pageRequest).getContent();
         pagination.setPageList(userList.stream().map(u -> BeanUtils.convertType(u, UserV1.class)).collect(Collectors.toList()));
         return pagination;
+    }
+
+    public UserV1 findUserV1ByCode(String code) {
+        WechatLoginUserDtoV1 wechatLoginUserDtoV1 = this.wechatService.getUserInfoByCode(
+                this.njuqaProperties.getWechat().getAppid(),
+                this.njuqaProperties.getWechat().getSecret(),
+                code,
+                "authorization_code");
+        BizAssert.allowed(wechatLoginUserDtoV1.getErrcode() == null,
+                new BizCode(BizCodes.INVALID_PARAM.getCode(),
+                        wechatLoginUserDtoV1.getErrcode() + ":" + wechatLoginUserDtoV1.getErrmsg()));
+        User existUser = this.userDao.findByOpenId(wechatLoginUserDtoV1.getOpenid());
+        if (existUser != null) {
+            return BeanUtils.convertType(existUser, UserV1.class);
+        }
+
+        UserV1 user = new UserV1();
+        user.setOpenId(wechatLoginUserDtoV1.getOpenid());
+        return user;
     }
 }
