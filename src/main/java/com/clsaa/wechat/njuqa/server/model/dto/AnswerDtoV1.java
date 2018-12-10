@@ -9,7 +9,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AnswerDtoV1 {
-    private String id;
     private String userId;
     private String questionId;
     private String content;

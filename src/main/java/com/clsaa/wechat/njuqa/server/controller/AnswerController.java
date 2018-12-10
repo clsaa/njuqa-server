@@ -60,6 +60,19 @@ public class AnswerController {
         return this.answerService.deleteAnswerById(questionId, answerId);
     }
 
+    /**
+     * <p>
+     * 更新答案
+     * </p>
+     *
+     * @param questionId  问题id
+     * @param answerId    回答id
+     * @param answerDtoV1 {@link AnswerDtoV1}
+     * @return {@link AnswerV1}
+     * @summary 更新答案
+     * @author 任贵杰 812022339@qq.com
+     * @since 2018-12-11
+     */
     @PutMapping("/v1/question/{questionId}/answer/{answerId}")
     public AnswerV1 updateAnswerByIdV1(@PathVariable("questionId") String questionId,
                                        @PathVariable("answerId") String answerId,
@@ -73,9 +86,35 @@ public class AnswerController {
                 answerDtoV1.getType());
     }
 
+    /**
+     * <p>
+     * 查询某个问题的全部回答
+     * </p>
+     *
+     * @param questionId 问题id
+     * @return {@link List<AnswerV1>}
+     * @summary 查询某个问题的全部回答
+     * @author 任贵杰 812022339@qq.com
+     * @since 2018-12-11
+     */
     @GetMapping("/v1/question/{questionId}/answer/all/")
     public List<AnswerV1> findAnswersByQuestionIdV1(@PathVariable("questionId") String questionId) {
         return this.answerService.findAnswersV1ByQuestionId(questionId);
     }
 
+    /**
+     * <p>
+     * 查询关注用户的最新回答
+     * </p>
+     *
+     * @param userId 用户id
+     * @return {@link List<AnswerV1>}
+     * @summary 查询关注用户的最新回答
+     * @author 任贵杰 812022339@qq.com
+     * @since 2018-12-11
+     */
+    @GetMapping("/v1/question/answer/attention/")
+    public List<AnswerV1> findAnswersByAttentionUsersV1(@RequestParam("userId") String userId) {
+        return this.answerService.findAnswersByAttentionUsers(userId);
+    }
 }

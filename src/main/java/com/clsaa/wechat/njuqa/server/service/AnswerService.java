@@ -52,14 +52,14 @@ public class AnswerService {
         Answer existAnswer = this.answerDao.findAnswerById(answerId);
         BizAssert.allowed(questionId.equals(existAnswer.getQuestionId()),
                 new BizCode(BizCodes.INVALID_PARAM.getCode(), "传入的问题id与查询问题不匹配"));
-        BizAssert.found(existAnswer == null, BizCodes.NOT_FOUND);
+        BizAssert.found(existAnswer != null, BizCodes.NOT_FOUND);
         this.answerDao.delete(existAnswer);
         return true;
     }
 
     public AnswerV1 updateAnswerById(String id, String userId, String questionId, String content, String type) {
         Answer existAnswer = this.answerDao.findAnswerById(id);
-        BizAssert.found(existAnswer == null, BizCodes.NOT_FOUND);
+        BizAssert.found(existAnswer != null, BizCodes.NOT_FOUND);
         BizAssert.allowed(questionId.equals(existAnswer.getUserId()), BizCodes.CANNOT_UPDATE_ANSWER);
         BizAssert.allowed(userId.equals(existAnswer.getUserId()), BizCodes.CANNOT_UPDATE_ANSWER);
         BizAssert.allowed(questionId.equals(existAnswer.getQuestionId()),
@@ -71,13 +71,26 @@ public class AnswerService {
         existAnswer.setMtime(TimestampUtil.now());
         existAnswer.setContent(content);
         existAnswer.setType(type);
+        this.answerDao.saveAndFlush(existAnswer);
         return BeanUtils.convertType(existAnswer, AnswerV1.class);
     }
 
     public List<AnswerV1> findAnswersV1ByQuestionId(String questionId) {
-        return this.answerDao.findAllByQuestionId(questionId).stream().map(s -> {
+        return this.answerDao.findAllByQuestionIdOrderByMtimeDesc(questionId).stream().map(s -> {
             AnswerV1 answerV1 = BeanUtils.convertType(s, AnswerV1.class);
-            answerV1.setUserV1(this.userService.findUserV1ById(s.getUserId()));
+            if (answerV1.getType().equals(Answer.TYPE_SHOW)) {
+                answerV1.setUserV1(this.userService.findUserV1ById(s.getUserId()));
+            } else {
+                answerV1.setUserId("");
+            }
+            return answerV1;
+        }).collect(Collectors.toList());
+    }
+
+    public List<AnswerV1> findAnswersByAttentionUsers(String userId) {
+        return this.answerDao.findAnswersByUserAttention(userId).stream().map(a -> {
+            AnswerV1 answerV1 = BeanUtils.convertType(a, AnswerV1.class);
+            answerV1.setUserV1(this.userService.findUserV1ById(a.getUserId()));
             return answerV1;
         }).collect(Collectors.toList());
     }

@@ -30,12 +30,12 @@ public class UserAttentionService {
         userAttention.setTargetUser(targetUser);
         userAttention.setCtime(TimestampUtil.now());
         userAttention.setMtime(TimestampUtil.now());
-        return BeanUtils.convertType(this.userAttentionDao.saveAndFlush(exitUserAttention), UserAttentionV1.class);
+        return BeanUtils.convertType(this.userAttentionDao.saveAndFlush(userAttention), UserAttentionV1.class);
     }
 
     public boolean deleteUserAttentionBySourceAndTargetUser(String sourceUser, String targetUser) {
         UserAttention exitUserAttention = this.userAttentionDao.findUserAttentionBySourceUserAndTargetUser(sourceUser, targetUser);
-        BizAssert.allowed(exitUserAttention == null, BizCodes.REPEATED_USER_ATTENTION);
+        BizAssert.found(exitUserAttention != null, BizCodes.NOT_FOUND);
         this.userAttentionDao.delete(exitUserAttention);
         return true;
     }
