@@ -37,4 +37,52 @@ public class Comment {
     @Basic
     @Column(name = "mtime")
     private Timestamp mtime;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getAnswerId() {
+        return answerId;
+    }
+
+    public void setAnswerId(String answerId) {
+        this.answerId = answerId;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public Timestamp getCtime() {
+        return ctime;
+    }
+
+    public void setCtime(Timestamp ctime) {
+        this.ctime = ctime;
+    }
+
+    public Timestamp getMtime() {
+        return mtime;
+    }
+
+    public void setMtime(Timestamp mtime) {
+        this.mtime = mtime;
+    }
 }
