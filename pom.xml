@@ -84,7 +84,7 @@
         <dependency>
             <groupId>com.clsaa.rest.result</groupId>
             <artifactId>standard-result</artifactId>
-            <version>0.0.6-SNAPSHOT</version>
+            <version>0.0.1</version>
         </dependency>
 
         <!--data-->
