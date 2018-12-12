@@ -39,7 +39,9 @@ public interface AnswerDao extends JpaRepository<Answer, String> {
      */
     List<Answer> findAllByQuestionIdOrderByMtimeDesc(String questionId);
 
-    /**
+    List<Answer> findAllByUserIdOrderByMtimeDesc(String Id);
+
+    /**user
      * 查询关注用户的最新答案
      *
      * @param userId 用户id
