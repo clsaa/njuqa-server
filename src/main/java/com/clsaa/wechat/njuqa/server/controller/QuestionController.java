@@ -72,4 +72,10 @@ public class QuestionController {
         return this.questionService.findQuestionsByUserIdWithAnswer(userId);
     }
 
+
+    @GetMapping("/v1/question/{userId}/")
+    public List<QuestionV1> findQuestionsByUserId(@PathVariable("userId") String userId) {
+        return this.questionService.findQuestionsByUserId(userId);
+    }
+
 }

@@ -79,4 +79,15 @@ public class QuestionService {
             return questionV1;
         }).collect(Collectors.toList());
     }
+
+
+    public List<QuestionV1> findQuestionsByUserId(String userId) {
+        return this.questionDao.findAllQuestionsByUserIdOrderByMtimeDesc(userId).stream().map(a->{
+
+
+            QuestionV1 questionV1=BeanUtils.convertType(a,QuestionV1.class);
+
+            return questionV1;
+        }).collect(Collectors.toList());
+    }
 }
