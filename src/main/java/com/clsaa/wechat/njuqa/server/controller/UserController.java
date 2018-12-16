@@ -124,12 +124,4 @@ public class UserController {
         return this.userService.findUserV1ByCode(code);
     }
 
-    @GetMapping(value = "/v1/usernickname/{nickname}")
-    public UserV1 findUserByNicknameV1(@PathVariable("nickname") String nickname) {
-        return this.userService.findUserV1ByNickname(nickname);
-    }
-
-
-
-
 }
