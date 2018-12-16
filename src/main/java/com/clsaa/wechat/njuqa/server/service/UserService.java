@@ -116,4 +116,5 @@ public class UserService {
         user.setOpenId(wechatLoginUserDtoV1.getOpenid());
         return user;
     }
+
 }

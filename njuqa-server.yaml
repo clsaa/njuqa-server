@@ -1,0 +1,47 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: njuqa-server
+  namespace: wechat
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: njuqa-server
+    spec:
+      containers:
+        - name: njuqa-server
+          image: registry.cn-beijing.aliyuncs.com/clsaa/njuqa-server
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 9999
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: njuqa-server
+  namespace: wechat
+  labels:
+    app: njuqa-server
+spec:
+  ports:
+    - port: 9999
+      protocol: TCP
+      targetPort: 9999
+  selector:
+    app: njuqa-server
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: njuqa-server
+  namespace: wechat
+spec:
+  rules:
+    - host: njuqa-server.wechat.clsaa.com
+      http:
+        paths:
+          - backend:
+              serviceName: njuqa-server
+              servicePort: 9999
