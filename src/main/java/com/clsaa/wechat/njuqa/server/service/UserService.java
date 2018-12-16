@@ -116,4 +116,10 @@ public class UserService {
         user.setOpenId(wechatLoginUserDtoV1.getOpenid());
         return user;
     }
+
+
+    public UserV1 findUserV1ByNickname(String nickname) {
+        User user=userDao.findUsersByNickname(nickname);
+        return BeanUtils.convertType(user, UserV1.class);
+    }
 }

@@ -1,14 +1,7 @@
 package com.clsaa.wechat.njuqa.server.controller;
 
-import com.clsaa.rest.result.bizassert.BizAssert;
-import com.clsaa.rest.result.bizassert.BizCode;
-import com.clsaa.wechat.njuqa.server.config.BizCodes;
-import com.clsaa.wechat.njuqa.server.model.dto.AnswerDtoV1;
 import com.clsaa.wechat.njuqa.server.model.dto.QuestionDtoV1;
-import com.clsaa.wechat.njuqa.server.model.po.Question;
-import com.clsaa.wechat.njuqa.server.model.vo.AnswerV1;
 import com.clsaa.wechat.njuqa.server.model.vo.QuestionV1;
-import com.clsaa.wechat.njuqa.server.service.AnswerService;
 import com.clsaa.wechat.njuqa.server.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -76,6 +69,12 @@ public class QuestionController {
     @GetMapping("/v1/question/{userId}/")
     public List<QuestionV1> findQuestionsByUserId(@PathVariable("userId") String userId) {
         return this.questionService.findQuestionsByUserId(userId);
+    }
+
+
+    @GetMapping("/v1/all/question/")
+    public List<QuestionV1> findAllQuestions() {
+        return this.questionService.findAllQuestions();
     }
 
 }

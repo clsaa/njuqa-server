@@ -1,11 +1,8 @@
 package com.clsaa.wechat.njuqa.server.dao;
 
 import com.clsaa.wechat.njuqa.server.model.po.Question;
-import com.clsaa.wechat.njuqa.server.model.vo.QuestionV1;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Arrays;
-import java.util.BitSet;
 import java.util.List;
 
 public interface QuestionDao extends JpaRepository<Question, String> {
@@ -22,4 +19,6 @@ public interface QuestionDao extends JpaRepository<Question, String> {
      * @return
      */
     List<Question> findAllQuestionsByUserIdOrderByMtimeDesc(String userId);
+
+    List<Question> findAll();
 }
