@@ -6,6 +6,8 @@ import com.clsaa.wechat.njuqa.server.util.TimestampUtil;
 import com.clsaa.wechat.njuqa.server.util.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -28,7 +30,7 @@ public class CommentService {
         comment.setId(UUIDUtil.getUUID());
         return commentDao.save(comment);
     }
-
+    @Transactional(rollbackFor = Exception.class, isolation = Isolation.SERIALIZABLE)
     public void deleteComment(String userId,String answerId){
         commentDao.deleteCommentByAnswerIdAndUserId(userId,answerId);
     }
