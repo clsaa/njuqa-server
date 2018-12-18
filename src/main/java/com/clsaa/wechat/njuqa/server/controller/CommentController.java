@@ -22,7 +22,7 @@ public class CommentController {
         return commentService.addComment(userId,answerId,content);
     }
 
-    @DeleteMapping(value = "/comment/addComment")
+    @DeleteMapping(value = "/comment/deleteComment")
     public void deleteComment(@RequestParam(value = "userId") String userId,@RequestParam(value = "answerId")String answerId){
         commentService.deleteComment(userId, answerId);
     }
