@@ -3,6 +3,7 @@ package com.clsaa.wechat.njuqa.server.service;
 import com.clsaa.wechat.njuqa.server.dao.CommentDao;
 import com.clsaa.wechat.njuqa.server.model.po.Comment;
 import com.clsaa.wechat.njuqa.server.util.TimestampUtil;
+import com.clsaa.wechat.njuqa.server.util.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,7 @@ public class CommentService {
         comment.setContent(content);
         comment.setCtime(TimestampUtil.now());
         comment.setMtime(TimestampUtil.now());
+        comment.setId(UUIDUtil.getUUID());
         return commentDao.save(comment);
     }
 
