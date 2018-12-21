@@ -48,8 +48,8 @@ public class UserService {
         User user = new User();
         user.setId(UUIDUtil.getUUID());
         user.setOpenId(openid);
-        user.setNickname(nickname);
-        user.setAvatarUrl(avatarUrl);
+        user.setNickname(nickname == null ? "匿名用户" : nickname);
+        user.setAvatarUrl(avatarUrl == null ? "../../images/icon1.jpeg" : avatarUrl);
         user.setCtime(TimestampUtil.now());
         user.setMtime(TimestampUtil.now());
         user.setIdentity(User.IDENTITY_NORMAL_USER);
@@ -67,8 +67,8 @@ public class UserService {
     public UserV1 updateUser(String id, String nickname, String avatarUrl) {
         User existUser = this.userDao.findUsersById(id);
         BizAssert.found(existUser != null, BizCodes.NOT_FOUND);
-        existUser.setNickname(nickname);
-        existUser.setAvatarUrl(avatarUrl);
+        existUser.setNickname(nickname == null ? "匿名用户" : nickname);
+        existUser.setAvatarUrl(avatarUrl == null ? "../../images/icon1.jpeg" : avatarUrl);
         existUser.setMtime(TimestampUtil.now());
         existUser = this.userDao.save(existUser);
         return BeanUtils.convertType(existUser, UserV1.class);
