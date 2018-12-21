@@ -17,5 +17,6 @@ public class QuestionV1 {
     private Timestamp mtime;
     private String closeStatus;
     private String deleteStatus;
+    private UserV1 userV1;
 
 }

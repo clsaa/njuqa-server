@@ -52,6 +52,7 @@ public class UserService {
         user.setAvatarUrl(avatarUrl);
         user.setCtime(TimestampUtil.now());
         user.setMtime(TimestampUtil.now());
+        user.setIdentity(User.IDENTITY_NORMAL_USER);
         User u = this.userDao.saveAndFlush(user);
         return BeanUtils.convertType(u, UserV1.class);
     }

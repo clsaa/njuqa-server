@@ -22,12 +22,14 @@ public class QuestionService {
     private QuestionDao questionDao;
     @Autowired
     private AnswerDao answerDao;
+    @Autowired
+    private UserService userService;
 
 
     @Transactional(rollbackFor = Exception.class, isolation = Isolation.SERIALIZABLE)
     public QuestionV1 addQuestion(String userId, String content) {
 
-        Question question=new Question();
+        Question question = new Question();
         question.setId(UUIDUtil.getUUID());
         question.setUserId(userId);
         question.setContent(content);
@@ -41,24 +43,24 @@ public class QuestionService {
     }
 
     public QuestionV1 updateQuestionCloseStatueById(String questionId, String closeStatus) {
-          Question existQuestion=this.questionDao.findQuestionById(questionId);
-          if(existQuestion!=null){
-              existQuestion.setCloseStatus(closeStatus);
-              this.questionDao.saveAndFlush(existQuestion);
-              return BeanUtils.convertType(existQuestion,QuestionV1.class);
-          }else{
-              return null;
-          }
+        Question existQuestion = this.questionDao.findQuestionById(questionId);
+        if (existQuestion != null) {
+            existQuestion.setCloseStatus(closeStatus);
+            this.questionDao.saveAndFlush(existQuestion);
+            return BeanUtils.convertType(existQuestion, QuestionV1.class);
+        } else {
+            return null;
+        }
 
     }
 
     public QuestionV1 updateQuestionDeleteStatueById(String questionId, String deleteStatus) {
-        Question existQuestion=this.questionDao.findQuestionById(questionId);
-        if(existQuestion!=null){
+        Question existQuestion = this.questionDao.findQuestionById(questionId);
+        if (existQuestion != null) {
             existQuestion.setDeleteStatus(deleteStatus);
             this.questionDao.saveAndFlush(existQuestion);
-            return BeanUtils.convertType(existQuestion,QuestionV1.class);
-        }else{
+            return BeanUtils.convertType(existQuestion, QuestionV1.class);
+        } else {
             return null;
         }
 
@@ -66,11 +68,11 @@ public class QuestionService {
 
 
     public List<QuestionV1> findQuestionsByUserIdWithAnswer(String userId) {
-        return this.answerDao.findAllByUserIdOrderByMtimeDesc(userId).stream().map(a->{
+        return this.answerDao.findAllByUserIdOrderByMtimeDesc(userId).stream().map(a -> {
 
-            AnswerV1 answerV1=BeanUtils.convertType(a,AnswerV1.class);
-            Question question=questionDao.findQuestionById(answerV1.getQuestionId());
-            QuestionV1 questionV1=BeanUtils.convertType(question,QuestionV1.class);
+            AnswerV1 answerV1 = BeanUtils.convertType(a, AnswerV1.class);
+            Question question = questionDao.findQuestionById(answerV1.getQuestionId());
+            QuestionV1 questionV1 = BeanUtils.convertType(question, QuestionV1.class);
 
             return questionV1;
         }).collect(Collectors.toList());
@@ -78,10 +80,10 @@ public class QuestionService {
 
 
     public List<QuestionV1> findQuestionsByUserId(String userId) {
-        return this.questionDao.findAllQuestionsByUserIdOrderByMtimeDesc(userId).stream().map(a->{
+        return this.questionDao.findAllQuestionsByUserIdOrderByMtimeDesc(userId).stream().map(a -> {
 
 
-            QuestionV1 questionV1=BeanUtils.convertType(a,QuestionV1.class);
+            QuestionV1 questionV1 = BeanUtils.convertType(a, QuestionV1.class);
 
             return questionV1;
         }).collect(Collectors.toList());
@@ -89,11 +91,9 @@ public class QuestionService {
 
 
     public List<QuestionV1> findAllQuestions() {
-        return this.questionDao.findAll().stream().map(a->{
-
-
-            QuestionV1 questionV1=BeanUtils.convertType(a,QuestionV1.class);
-
+        return this.questionDao.findAll().stream().map(a -> {
+            QuestionV1 questionV1 = BeanUtils.convertType(a, QuestionV1.class);
+            questionV1.setUserV1(this.userService.findUserV1ById(questionV1.getUserId()));
             return questionV1;
         }).collect(Collectors.toList());
     }

@@ -15,7 +15,7 @@ import java.sql.Timestamp;
 @Entity
 @Table(name = "t_user", schema = "db_njuqa")
 public class User {
-    public static final String IDENTITY_SUPER_ADMIN = "SUPER_ADMIN";
+    public static final String IDENTITY_SUPER_ADMIN = "ADMIN";
     public static final String IDENTITY_NORMAL_USER = "NORMAL_USER";
     @Id
     @Column(name = "id")
