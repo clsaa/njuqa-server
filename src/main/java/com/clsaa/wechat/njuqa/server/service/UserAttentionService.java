@@ -39,4 +39,13 @@ public class UserAttentionService {
         this.userAttentionDao.delete(exitUserAttention);
         return true;
     }
+
+    public UserAttentionV1 findUserAttentionBySourceUserAndTargetUser(String sourceUser, String targetUser) {
+        UserAttention exitUserAttention = this.userAttentionDao.findUserAttentionBySourceUserAndTargetUser(sourceUser, targetUser);
+        if (exitUserAttention == null) {
+            return null;
+        } else {
+            return BeanUtils.convertType(exitUserAttention, UserAttentionV1.class);
+        }
+    }
 }

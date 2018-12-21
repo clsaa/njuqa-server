@@ -51,4 +51,17 @@ public class UserAttentionController {
                                                               @PathVariable("targetUser") String targetUser) {
         return this.userAttentionService.deleteUserAttentionBySourceAndTargetUser(sourceUser, targetUser);
     }
+
+    /**
+     * 查询用户关注
+     *
+     * @param sourceUser 关注用户
+     * @param targetUser 被关注用户
+     * @return {@link UserAttentionV1}
+     */
+    @GetMapping("/v1/user/attention/source/{sourceUser}/target/{targetUser}")
+    public UserAttentionV1 findUserAttentionBySourceAndTargetUserV1(@PathVariable("sourceUser") String sourceUser,
+                                                                    @PathVariable("targetUser") String targetUser) {
+        return this.userAttentionService.findUserAttentionBySourceUserAndTargetUser(sourceUser, targetUser);
+    }
 }
