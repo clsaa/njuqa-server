@@ -1,5 +1,6 @@
 package com.clsaa.wechat.njuqa.server.controller;
 
+import com.clsaa.wechat.njuqa.server.model.dto.CommentDtoV1;
 import com.clsaa.wechat.njuqa.server.model.po.Comment;
 import com.clsaa.wechat.njuqa.server.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class CommentController {
     }*/
 
     @GetMapping(value="/comment/getAllByAnswerId")
-    public List<Comment> getCommentsByAnswerId(@RequestParam(value = "answerId") String answerId){
+    public List<CommentDtoV1> getCommentsByAnswerId(@RequestParam(value = "answerId") String answerId){
         return commentService.getCommentsByAnswerId(answerId);
     }
 
