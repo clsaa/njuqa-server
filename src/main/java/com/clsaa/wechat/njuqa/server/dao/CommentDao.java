@@ -9,6 +9,8 @@ public interface CommentDao extends JpaRepository<Comment,String> {
 
     List<Comment> getCommentsByUserIdOrderByCtimeDesc(String userId);
 
+    List<Comment> getCommentsByAnswerIdOrderByCtimeDesc(String answerId);
+
     void deleteCommentByAnswerIdAndUserId(String answerId,String userId);
 
 }

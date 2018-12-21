@@ -12,9 +12,14 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
 
-    @GetMapping(value="/comment/getAllByUserId")
+    /*@GetMapping(value="/comment/getAllByUserId")
     public List<Comment> getCommentsByUserId(@RequestParam(value = "userId") String userId){
         return commentService.getCommentsByUserId(userId);
+    }*/
+
+    @GetMapping(value="/comment/getAllByAnswerId")
+    public List<Comment> getCommentsByAnswerId(@RequestParam(value = "answerId") String answerId){
+        return commentService.getCommentsByAnswerId(answerId);
     }
 
     @PostMapping(value = "/comment/addComment")

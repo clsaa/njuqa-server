@@ -20,6 +20,10 @@ public class CommentService {
         return commentDao.getCommentsByUserIdOrderByCtimeDesc(userId);
     }
 
+    public List<Comment> getCommentsByAnswerId(String answerId){
+        return commentDao.getCommentsByAnswerIdOrderByCtimeDesc(answerId);
+    }
+
     public Comment addComment(String userId,String answerId,String content){
         Comment comment=new Comment();
         comment.setUserId(userId);
