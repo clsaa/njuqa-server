@@ -13,6 +13,4 @@ public interface CommentDao extends JpaRepository<Comment,String> {
 
     void deleteCommentByAnswerIdAndUserId(String answerId,String userId);
 
-
-
 }
